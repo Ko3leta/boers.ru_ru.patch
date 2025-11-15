@@ -1,0 +1,19 @@
+{
+  "default_mining_speed": 1.0,
+  "durability": 100,
+  "mining_rules": [
+    {
+      "blocks": "#minecraft:incorrect_for_gold_tool",
+      "correct_for_drops": false
+    },
+    {
+      "blocks": "#minecraft:mineable/pickaxe",
+      "correct_for_drops": true,
+      "speed": 1.0
+    }
+  ],
+  "texture": {
+    "active": "drills:item/drill/golden_drill_head",
+    "idle": "drills:item/drill/golden_drill_head_idle"
+  }
+}

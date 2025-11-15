@@ -1,0 +1,25 @@
+{
+  "head_equip": {
+    "sounds": [
+      {"name": "drills:head_equip"}
+    ]
+  },
+  "head_unequip": {
+    "sounds": [
+      {"name": "drills:head_unequip"}
+    ]
+  },
+  "air": {
+    "sounds": [
+      "drills:air",
+      "drills:air2",
+      "drills:air3"
+    ]
+  },
+  "stone": {
+    "sounds": [
+      "drills:stone",
+      "drills:stone2"
+    ]
+  }
+}

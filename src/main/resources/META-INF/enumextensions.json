@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
+      "name": "DRILLS_DRILL_HOLDING",
+      "constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
+      "parameters": {
+        "class": "net/foxy/drills/base/ModEnums",
+        "field": "DRILL_STANDING_POS"
+      }
+    }
+  ]
+}

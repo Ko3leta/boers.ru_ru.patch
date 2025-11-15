@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.foxy.drills.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "HumanoidModelMixin",
+    "LivingEntityMixin",
+    "LocalPlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+  ]
+}

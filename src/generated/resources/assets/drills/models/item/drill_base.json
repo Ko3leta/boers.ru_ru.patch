@@ -1,0 +1,17 @@
+{
+  "parent": "drills:item/entity",
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [
+        -72.5,
+        -16,
+        -27
+      ],
+      "translation": [
+        -5.325,
+        5,
+        -2.25
+      ]
+    }
+  }
+}
