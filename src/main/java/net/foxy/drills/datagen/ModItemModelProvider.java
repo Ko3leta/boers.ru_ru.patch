@@ -2,9 +2,11 @@ package net.foxy.drills.datagen;
 
 import net.foxy.drills.DrillsMod;
 import net.foxy.drills.base.ModItems;
+import net.foxy.drills.data.DrillColoring;
 import net.foxy.drills.util.Utils;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
@@ -20,12 +22,23 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        tool(ModItems.DRILL_BASE);
         entity(ModItems.DRILL_BASE).transforms()
                 .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(-72.5f, -16, -27).translation(-5.325f, 5, -2.25f).end().end();
-        tool(ModItems.DRILL_BASE);
-        tool("drill_base_gui", "drill_base_gui");
+        ItemModelBuilder.OverrideBuilder override = tool(ModItems.DRILL_BASE).override();
+        ItemModelBuilder.OverrideBuilder overrideGui = tool("drill_base_gui", "drill_base_gui").override();
 
+        for (int j = 0; j < 7; j++) {
+            DyeColor dyeColor = DrillColoring.ALLOWED_COLORS.get(j);
+            override.predicate(Utils.rl("color"), dyeColor.getId()).model(tool("drill_base_" + dyeColor.getName()));
+            overrideGui.predicate(Utils.rl("color"), dyeColor.getId()).model(tool("drill_base_gui_" + dyeColor.getName()));
+            if (j == 6) {
+                override.end();
+                overrideGui.end();
+            } else {
+                override = override.end().override();
+                overrideGui = overrideGui.end().override();
+            }
+        }
     }
 
     private ItemModelBuilder entity(DeferredItem<? extends ItemLike> item) {
@@ -52,6 +65,10 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
     private ItemModelBuilder tool(DeferredItem<? extends Item> item, String name) {
         return tool(name, item.getId().getPath());
+    }
+
+    private ItemModelBuilder tool(String name) {
+        return tool(name, name);
     }
 
     private ItemModelBuilder tool(String name, String texture) {

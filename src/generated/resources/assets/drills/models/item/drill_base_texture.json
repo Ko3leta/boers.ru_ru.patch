@@ -1,5 +1,49 @@
 {
   "parent": "minecraft:item/handheld",
+  "overrides": [
+    {
+      "model": "drills:item/drill_base_white",
+      "predicate": {
+        "drills:color": 0.0
+      }
+    },
+    {
+      "model": "drills:item/drill_base_yellow",
+      "predicate": {
+        "drills:color": 4.0
+      }
+    },
+    {
+      "model": "drills:item/drill_base_lime",
+      "predicate": {
+        "drills:color": 5.0
+      }
+    },
+    {
+      "model": "drills:item/drill_base_gray",
+      "predicate": {
+        "drills:color": 7.0
+      }
+    },
+    {
+      "model": "drills:item/drill_base_green",
+      "predicate": {
+        "drills:color": 13.0
+      }
+    },
+    {
+      "model": "drills:item/drill_base_red",
+      "predicate": {
+        "drills:color": 14.0
+      }
+    },
+    {
+      "model": "drills:item/drill_base_black",
+      "predicate": {
+        "drills:color": 15.0
+      }
+    }
+  ],
   "render_type": "minecraft:cutout",
   "textures": {
     "layer0": "drills:item/drill_base"

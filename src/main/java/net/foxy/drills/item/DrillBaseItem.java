@@ -37,12 +37,9 @@ import java.util.Locale;
 import java.util.Optional;
 
 public class DrillBaseItem extends Item {
-    private static final int BAR_COLOR = Mth.color(0.4F, 0.4F, 1.0F);
-    private static final int TOOLTIP_MAX_WEIGHT = 64;
-
     public DrillBaseItem() {
         super(new Properties().stacksTo(1)
-                .component(ModDataComponents.DRILL_CONTENTS, DrillContents.EMPTY)
+                .component(ModDataComponents.DRILL_CONTENTS, DrillContents.EMPTY).component(DataComponents.BASE_COLOR, DyeColor.BLUE)
         );
     }
 

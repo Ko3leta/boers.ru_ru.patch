@@ -19,12 +19,12 @@ public class DefaultDrillHeadsProvider extends DrillHeadsProvider {
 
     @Override
     protected void buildDrills(DrillOutput output) {
-        create(output, "copper", 1, 100, BlockTags.INCORRECT_FOR_STONE_TOOL);
         create(output, "default", 1, 100, BlockTags.INCORRECT_FOR_IRON_TOOL);
-        create(output, "diamond", 1, 100, BlockTags.INCORRECT_FOR_DIAMOND_TOOL);
-        create(output, "golden", 1, 100, BlockTags.INCORRECT_FOR_GOLD_TOOL);
-        create(output, "iron", 1, 100, BlockTags.INCORRECT_FOR_IRON_TOOL);
-        create(output, "netherite", 1, 100, BlockTags.INCORRECT_FOR_NETHERITE_TOOL);
+        create(output, "copper", 10, 95, BlockTags.INCORRECT_FOR_STONE_TOOL);
+        create(output, "iron", 12, 125, BlockTags.INCORRECT_FOR_IRON_TOOL);
+        create(output, "diamond", 16, 800, BlockTags.INCORRECT_FOR_DIAMOND_TOOL);
+        create(output, "golden", 24, 16, BlockTags.INCORRECT_FOR_GOLD_TOOL);
+        create(output, "netherite", 18, 1000, BlockTags.INCORRECT_FOR_NETHERITE_TOOL);
     }
     private static void create(DrillOutput output, String id, float miningSpeed, int durability, TagKey<Block> canMine) {
         create(output, id, "item/drill/" + id + "_drill_head", miningSpeed, durability, canMine);

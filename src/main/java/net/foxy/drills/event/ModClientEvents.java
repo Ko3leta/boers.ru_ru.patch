@@ -7,6 +7,7 @@ import net.foxy.drills.client.ClientDrillTooltip;
 import net.foxy.drills.client.DrillBaseRenderer;
 import net.foxy.drills.client.model.DrillModel;
 import net.foxy.drills.item.DrillContents;
+import net.foxy.drills.util.ModItemProperties;
 import net.foxy.drills.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -18,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
@@ -59,5 +61,10 @@ public class ModClientEvents {
                 return ModEnums.DRILL_STANDING_POS.getValue();
             }
         }, ModItems.DRILL_BASE);
+    }
+
+    @SubscribeEvent
+    public static void clientSetup(FMLClientSetupEvent event) {
+        ModItemProperties.addModItemProperties();
     }
 }

@@ -1,9 +1,6 @@
 package net.foxy.drills;
 
-import net.foxy.drills.base.ModCreativeModeTabs;
-import net.foxy.drills.base.ModDataComponents;
-import net.foxy.drills.base.ModItems;
-import net.foxy.drills.base.ModSounds;
+import net.foxy.drills.base.*;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -23,5 +20,6 @@ public class DrillsMod {
         ModDataComponents.COMPONENTS.register(modEventBus);
         ModCreativeModeTabs.TABS.register(modEventBus);
         ModSounds.SOUND_EVENTS.register(modEventBus);
+        ModRecipeSerializers.SERIALIZERS.register(modEventBus);
     }
 }

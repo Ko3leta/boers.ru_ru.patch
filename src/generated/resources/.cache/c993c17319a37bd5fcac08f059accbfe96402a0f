@@ -1,4 +1,18 @@
-// 1.21.1	2025-11-15T15:46:33.7931469	Item Models: drills
+// 1.21.1	2025-11-15T22:24:19.1105596	Item Models: drills
 8a63fd791033b34bbe217762530ada2bf359e283 assets/drills/models/item/drill_base.json
-329733f892bd0747ef31570c08f6a2c3a08923fd assets/drills/models/item/drill_base_gui.json
-a08dfde2eeebc7dc5db03644ef104ed2cb4fadd4 assets/drills/models/item/drill_base_texture.json
+5c51e81b20463321b71581a7fbb221ec7e77ccf6 assets/drills/models/item/drill_base_black.json
+5d30f2256b66950d99466341f5edd1271321bd98 assets/drills/models/item/drill_base_gray.json
+c8c876651805d56eb4ca9db04cf9381088f0676d assets/drills/models/item/drill_base_green.json
+a7b7f34ae835ed8dd21d55cac1a8fd168f764265 assets/drills/models/item/drill_base_gui.json
+82cbefaade3ddcb94e6d8631a7c0731bee7c9955 assets/drills/models/item/drill_base_gui_black.json
+4c0bc74c2c0a4526e3769b650c5e01f878b60e00 assets/drills/models/item/drill_base_gui_gray.json
+7f5bd432aa7722899226e8cbcf650d53f007b575 assets/drills/models/item/drill_base_gui_green.json
+c1c7dec3158b00c61e3d205ef9807582a9f27d3b assets/drills/models/item/drill_base_gui_lime.json
+d5dd7dc594ecdb0d980058cdb629b47e0fb5694c assets/drills/models/item/drill_base_gui_red.json
+af545557704cd41c5ad171c03aaf41151535e7dc assets/drills/models/item/drill_base_gui_white.json
+ac679696d950e4b3625e135dabb905d23208ee51 assets/drills/models/item/drill_base_gui_yellow.json
+95466d0a7c83b42b4ec9f34af4ca76f83d4574e9 assets/drills/models/item/drill_base_lime.json
+d02cb8ca792b86b6a9a5f940e0d4ad0751216e2b assets/drills/models/item/drill_base_red.json
+9efa5ad8edf52973208c5620d46ed1faf7f7ee26 assets/drills/models/item/drill_base_texture.json
+db7514b9513d6bb07fd3c9d20ffa0814ffc08695 assets/drills/models/item/drill_base_white.json
+e490731c66304f5f139eadb9d05c390622a06b0c assets/drills/models/item/drill_base_yellow.json

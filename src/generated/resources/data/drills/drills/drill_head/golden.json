@@ -1,6 +1,6 @@
 {
   "default_mining_speed": 1.0,
-  "durability": 100,
+  "durability": 16,
   "mining_rules": [
     {
       "blocks": "#minecraft:incorrect_for_gold_tool",
@@ -9,7 +9,7 @@
     {
       "blocks": "#minecraft:mineable/pickaxe",
       "correct_for_drops": true,
-      "speed": 1.0
+      "speed": 24.0
     }
   ],
   "texture": {
