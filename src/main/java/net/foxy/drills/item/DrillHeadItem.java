@@ -1,6 +1,8 @@
 package net.foxy.drills.item;
 
+import net.foxy.drills.data.DrillHead;
 import net.foxy.drills.util.Utils;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -11,7 +13,8 @@ public class DrillHeadItem extends Item {
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        return Utils.drillOrDefault(stack).durability();
+        DrillHead head = Utils.getDrill(stack);
+        return head != null ? head.durability() : 0;
     }
 
     @Override
@@ -21,6 +24,12 @@ public class DrillHeadItem extends Item {
 
     @Override
     public String getDescriptionId(ItemStack stack) {
-        return super.getDescriptionId(stack) + Utils.drillOrDefault(stack).id().toString().replace(":", ".");
+        Holder<DrillHead> head = Utils.getDrillHolder(stack);
+
+        if (head == null) {
+            return super.getDescriptionId(stack);
+        }
+
+        return super.getDescriptionId(stack) + "." + head.getKey().location().toString().replace(":", ".");
     }
 }

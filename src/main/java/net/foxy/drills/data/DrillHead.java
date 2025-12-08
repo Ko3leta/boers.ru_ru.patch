@@ -20,19 +20,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 import java.util.Optional;
 
-public record DrillHead(ResourceLocation id, Texture texture, float defaultMiningSpeed, int durability, List<Tool.Rule> miningRules) {
-    public static final DrillHead DEFAULT = new DrillHead(Utils.rl("default"), Utils.rl("item/drill/default_drill_head"), 1, 200, BlockTags.NEEDS_IRON_TOOL);
-
+public record DrillHead(Texture texture, float defaultMiningSpeed, int durability, List<Tool.Rule> miningRules) {
     public static final Codec<DrillHead> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    ResourceLocation.CODEC.optionalFieldOf("id").forGetter((t) -> Optional.ofNullable(t.id)),
                     Texture.CODEC.fieldOf("texture").forGetter(DrillHead::texture),
                     Codec.FLOAT.fieldOf("default_mining_speed").forGetter(DrillHead::defaultMiningSpeed),
                     Codec.INT.fieldOf("durability").forGetter(DrillHead::durability),
                     Tool.Rule.CODEC.listOf().fieldOf("mining_rules").forGetter(DrillHead::miningRules)
-            ).apply(instance, (id1, texture1, miningSpeed1, durability1, miningLevel) ->
-                    new DrillHead(id1.orElseGet(() -> Utils.rl("")),
-                            texture1, miningSpeed1, durability1, miningLevel))
+            ).apply(instance, DrillHead::new)
     );
     public static final Codec<Holder<DrillHead>> ITEM_CODEC = RegistryFixedCodec.create(ModRegistries.DRILL_HEAD);
 
@@ -57,12 +52,8 @@ public record DrillHead(ResourceLocation id, Texture texture, float defaultMinin
 
         return false;
     }
-
     public DrillHead(ResourceLocation texture, float miningSpeed, int durability, TagKey<Block> miningLevel) {
-        this(null, texture, miningSpeed, durability, miningLevel);
-    }
-    public DrillHead(ResourceLocation id, ResourceLocation texture, float miningSpeed, int durability, TagKey<Block> miningLevel) {
-        this(id, new Texture(ResourceLocation.fromNamespaceAndPath(texture.getNamespace(),
+        this(new Texture(ResourceLocation.fromNamespaceAndPath(texture.getNamespace(),
                         texture.getPath() + "_idle"), texture), 1.0f, durability,
                 List.of(Tool.Rule.deniesDrops(miningLevel),
                         Tool.Rule.minesAndDrops(BlockTags.MINEABLE_WITH_PICKAXE, miningSpeed),

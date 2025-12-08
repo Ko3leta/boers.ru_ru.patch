@@ -6,13 +6,13 @@
   "base": {
     "type": "neoforge:components",
     "components": {
-      "drills:drill_id": "drills:diamond"
+      "drills:drill": "drills:diamond"
     },
     "items": "drills:drill_head"
   },
   "result": {
     "components": {
-      "drills:drill_id": "drills:netherite"
+      "drills:drill": "drills:netherite"
     },
     "count": 1,
     "id": "drills:drill_head"

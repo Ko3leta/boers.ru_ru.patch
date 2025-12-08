@@ -22,13 +22,13 @@ public class Utils {
     }
 
     public static DrillHead getDrill(ItemStack stack) {
-        Holder<DrillHead> drillHead = stack.get(ModDataComponents.DRILL.get());
+        Holder<DrillHead> drillHead = getDrillHolder(stack);
 
         return drillHead == null ? null : drillHead.value();
     }
 
-    public static DrillHead drillOrDefault(ItemStack stack) {
-        DrillHead head = getDrill(stack);
-        return head == null ? DrillHead.DEFAULT : head;
+    public static Holder<DrillHead> getDrillHolder(ItemStack stack) {
+
+        return stack.get(ModDataComponents.DRILL.get());
     }
 }

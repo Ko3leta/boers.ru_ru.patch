@@ -45,12 +45,14 @@ public class WrappedItemOverrides extends ItemOverrides {
             if (stack.isEmpty()) {
                 stack = bore;
             }
-            DrillHead.Texture head = Utils.drillOrDefault(stack).texture();
+            DrillHead head = Utils.getDrill(stack);
             final ResourceLocation texture;
-            if (!bore.getOrDefault(ModDataComponents.IS_USED.get(), false)) {
-                texture = head.idle();
+            if (head == null) {
+                texture = Utils.rl("item/drill/default_drill_head_idle");
+            } else if (!bore.getOrDefault(ModDataComponents.IS_USED.get(), false)) {
+                texture = head.texture().idle();
             } else {
-                texture = head.active();
+                texture = head.texture().active();
             }
             return drillModel.children.computeIfAbsent(texture, key -> {
                 if (key == null) {
