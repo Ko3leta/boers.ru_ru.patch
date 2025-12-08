@@ -2,11 +2,11 @@
   "entries": [
     {
       "enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
-      "name": "DRILLS_DRILL_HOLDING",
+      "name": "BOERS_BOER_HOLDING",
       "constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
       "parameters": {
-        "class": "net/foxy/drills/base/ModEnums",
-        "field": "DRILL_STANDING_POS"
+        "class": "net/foxy/boers/base/ModEnums",
+        "field": "BOER_STANDING_POS"
       }
     }
   ]

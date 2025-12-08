@@ -1,7 +1,7 @@
-// 1.21.1	2025-12-08T02:03:26.4485133	Registries
-73ad748814b6ade19783d2ce0d3fdd07f367618b data/drills/drills/drill_head/copper.json
-52f894aefb541fd0bd3ec73b2cf61f21c5707fa4 data/drills/drills/drill_head/default.json
-cc4243cfd49f4563d31d53977bea7e1abd8d2bd6 data/drills/drills/drill_head/diamond.json
-1efe0af4a3016145a3d726e6558f3444ffd132ab data/drills/drills/drill_head/golden.json
-9423b556dc3680c2f442b6be4173efe72a4f75c6 data/drills/drills/drill_head/iron.json
-68d33ab78e0f5c32040766899cf2041bfe036a57 data/drills/drills/drill_head/netherite.json
+// 1.21.1	2025-12-08T02:29:55.3077581	Registries
+d72bd6d7309dc6c4748e39a6cc2498b6ee74f750 data/boers/boers/boer_head/copper.json
+7592dee57484acf0c9469fa462899aa119413440 data/boers/boers/boer_head/default.json
+fdc816c3a01a400bc1d91d438297e0ae33d186df data/boers/boers/boer_head/diamond.json
+6e33d334108b375c36f650f5d6b8fa16f35c731a data/boers/boers/boer_head/golden.json
+15f23eeb143b0d055e4331834b703d99e9c74a66 data/boers/boers/boer_head/iron.json
+d0bce422a08299fcb4798f34b20c7272e3efa1eb data/boers/boers/boer_head/netherite.json

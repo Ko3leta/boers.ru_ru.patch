@@ -1,0 +1,27 @@
+{
+  "head_equip": {
+    "sounds": [
+      {"name": "boers:head_equip"}
+    ]
+  },
+  "head_unequip": {
+    "sounds": [
+      {"name": "boers:head_unequip"}
+    ]
+  },
+  "air": {
+    "sounds": [
+      "boers:idle0",
+      "boers:idle1",
+      "boers:idle2"
+    ]
+  },
+  "stone": {
+    "sounds": [
+      "boers:boer0",
+      "boers:boer1",
+      "boers:boer2",
+      "boers:boer3"
+    ]
+  }
+}
