@@ -18,7 +18,7 @@ public class ModCreativeModeTabs {
             TABS.register("texture",
                     () -> CreativeModeTab.builder().icon(() -> {
                         ItemStack itemStack = ModItems.BOER_BASE.toStack();
-                        itemStack.set(ModDataComponents.BOER_CONTENTS, new BoerContents(ModItems.BOER_HEAD.toStack()));
+                        Utils.setBoerContents(itemStack, new BoerContents(ModItems.BOER_HEAD.toStack()));
                         return itemStack;
                             })
                             .title(Component.translatable("item.boers.boers"))

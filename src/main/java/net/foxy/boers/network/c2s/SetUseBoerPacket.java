@@ -28,7 +28,7 @@ public record SetUseBoerPacket(boolean used) implements CustomPacketPayload {
     public static void handle(SetUseBoerPacket payLoad, IPayloadContext ctx) {
         ItemStack mainHandItem = ctx.player().getMainHandItem();
         if (mainHandItem.getItem() instanceof BoerBaseItem) {
-            mainHandItem.set(ModDataComponents.IS_USED, payLoad.used);
+            Utils.setUsed(mainHandItem, payLoad.used);
         }
     }
 }

@@ -2,6 +2,7 @@ package net.foxy.boers.mixin;
 
 import net.foxy.boers.base.ModDataComponents;
 import net.foxy.boers.item.BoerContents;
+import net.foxy.boers.util.Utils;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,7 +20,7 @@ public class LivingEntityMixin {
             index = 0
     )
     private static ItemStack particles(ItemStack stack) {
-        ItemStack boer = stack.getOrDefault(ModDataComponents.BOER_CONTENTS, BoerContents.EMPTY).getItemUnsafe();
+        ItemStack boer = Utils.getBoerContentsOrEmpty(stack).getItemUnsafe();
         if (!boer.isEmpty()) {
             return boer;
         }

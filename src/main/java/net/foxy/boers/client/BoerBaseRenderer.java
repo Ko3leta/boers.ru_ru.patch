@@ -7,6 +7,7 @@ import net.foxy.boers.item.BoerContents;
 import net.foxy.boers.util.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.foxy.boers.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -27,7 +28,7 @@ public class BoerBaseRenderer extends BlockEntityWithoutLevelRenderer {
     public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
         poseStack.pushPose();
         if (displayContext == ItemDisplayContext.GUI || displayContext == ItemDisplayContext.FIXED) {
-            BoerContents itemStack = stack.get(ModDataComponents.BOER_CONTENTS);
+            BoerContents itemStack = Utils.getBoerContents(stack);
             boolean flag = itemStack != null && !itemStack.isEmpty();
             if (!flag) {
                 poseStack.translate(-1 * 0.0625, 3 * 0.0625, 0);
@@ -39,7 +40,7 @@ public class BoerBaseRenderer extends BlockEntityWithoutLevelRenderer {
                 RenderUtils.renderItemModel(stack, displayContext, poseStack, buffer, packedLight, packedOverlay);
             }
         } else {
-            if (stack.getOrDefault(ModDataComponents.IS_USED, false)) {
+            if (Utils.isUsed(stack)) {
                 RandomSource randomSource = Minecraft.getInstance().level.getRandom();
                 poseStack.translate(randomSource.nextFloat() / 100f, randomSource.nextFloat() / 100f, randomSource.nextFloat() / 100f);
             }
@@ -55,7 +56,7 @@ public class BoerBaseRenderer extends BlockEntityWithoutLevelRenderer {
             RenderUtils.renderItemModel(stack, displayContext, poseStack, buffer, packedLight, packedOverlay, ModModels.BOER_BASE);
             poseStack.scale(0.5f, 0.5f, 1.01f);
             poseStack.translate(12 * 0.0625, 5 * 0.0625, -0.005f);
-            BoerContents itemStack = stack.get(ModDataComponents.BOER_CONTENTS);
+            BoerContents itemStack = Utils.getBoerContents(stack);
             if (itemStack != null && !itemStack.isEmpty()) {
                 RenderUtils.renderItemModel(stack, displayContext, poseStack, buffer, packedLight, packedOverlay);
             }

@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxy.boers.base.ModDataComponents;
 import net.foxy.boers.base.ModRegistries;
+import net.foxy.boers.util.Utils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
@@ -44,7 +45,7 @@ public record BoerHead(Texture texture, float defaultMiningSpeed, int durability
         for (Rule tool$rule : miningRules) {
             if (tool$rule.speed().isPresent() && state.is(tool$rule.blocks())) {
                 if (tool$rule.maxSpeed.isPresent() && tool$rule.speedPerTick.isPresent()) {
-                    return (Math.min(tool$rule.speed.get() + tool$rule.speedPerTick.get() * stack.getOrDefault(ModDataComponents.USED_FOR, 0), tool$rule.maxSpeed.get()));
+                    return (Math.min(tool$rule.speed.get() + tool$rule.speedPerTick.get() * Utils.getUsedFor(stack), tool$rule.maxSpeed.get()));
                 }
                 return tool$rule.speed().get();
             }

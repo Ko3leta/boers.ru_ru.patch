@@ -16,6 +16,7 @@ import net.foxy.boers.network.c2s.TickBoerPacket;
 import net.foxy.boers.particle.spark.SparkParticleProvider;
 import net.foxy.boers.util.ModItemProperties;
 import net.foxy.boers.util.Utils;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -40,7 +41,9 @@ public class ModClientEvents {
     public static int lastProgress = 0;
     public static int usingProgress = 0;
     public static BoerSoundInstance soundInstance = null;
+    public static BoerSoundInstance soundInstance2 = null;
     public static BoerSoundInstance idleSoundInstance = null;
+    public static BoerSoundInstance idleSoundInstance2 = null;
 
     @SubscribeEvent
     public static void registerCustomModels(ModelEvent.RegisterGeometryLoaders event) {
@@ -74,7 +77,7 @@ public class ModClientEvents {
                 usingProgress = Math.max(usingProgress - 1, 0);
             }
 
-            boolean isUsed = stack.getOrDefault(ModDataComponents.IS_USED, false);
+            boolean isUsed = Utils.isUsed(stack);
             if (usingProgress < 9) {
                 if (isUsed) {
                     PacketDistributor.sendToServer(new SetUseBoerPacket(false));

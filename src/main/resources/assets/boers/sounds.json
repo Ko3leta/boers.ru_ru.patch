@@ -11,17 +11,12 @@
   },
   "air": {
     "sounds": [
-      "boers:idle0",
-      "boers:idle1",
-      "boers:idle2"
+      "boers:idle"
     ]
   },
   "stone": {
     "sounds": [
-      "boers:boer0",
-      "boers:boer1",
-      "boers:boer2",
-      "boers:boer3"
+      "boers:boer"
     ]
   }
 }

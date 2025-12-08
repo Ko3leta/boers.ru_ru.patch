@@ -52,7 +52,7 @@ public class BoerBaseItem extends Item {
 
     @Override
     public boolean isDamageable(ItemStack stack) {
-        ItemStack boerItem = stack.get(ModDataComponents.BOER_CONTENTS).getItemUnsafe();
+        ItemStack boerItem = Utils.getBoerContents(stack).getItemUnsafe();
         return !boerItem.isEmpty() && boerItem.isDamageableItem();
     }
 
@@ -66,12 +66,12 @@ public class BoerBaseItem extends Item {
         if (isSelected) {
             entity.setYBodyRot(entity.getYHeadRot() + 37);
             if (entity instanceof Player player) {
-                if (stack.getOrDefault(ModDataComponents.IS_USED, false)) {
+                if (Utils.isUsed(stack)) {
                     player.swinging = false;
                     player.attackAnim = 0;
                     player.swingTime = 0;
                 } else {
-                    stack.set(ModDataComponents.USED_FOR, Math.max(0, stack.getOrDefault(ModDataComponents.USED_FOR, 3) - 3));
+                    Utils.decreaseUseFor(stack);
                 }
             }
         }
@@ -81,12 +81,12 @@ public class BoerBaseItem extends Item {
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        return stack.getOrDefault(ModDataComponents.BOER_CONTENTS.get(), BoerContents.EMPTY).items.getMaxDamage();
+        return Utils.getBoerContentsOrEmpty(stack).items.getMaxDamage();
     }
 
     @Override
     public int getDamage(ItemStack stack) {
-        return stack.getOrDefault(ModDataComponents.BOER_CONTENTS.get(), BoerContents.EMPTY).items.getDamageValue();
+        return Utils.getBoerContentsOrEmpty(stack).items.getDamageValue();
     }
 
     @Override
@@ -104,7 +104,7 @@ public class BoerBaseItem extends Item {
     }
 
     public float getDestroySpeed(ItemStack stack, BlockState state) {
-        BoerHead tool = Utils.getBoer(stack.getOrDefault(ModDataComponents.BOER_CONTENTS, BoerContents.EMPTY).items);
+        BoerHead tool = Utils.getBoer(Utils.getBoerContentsOrEmpty(stack).items);
         return tool != null ? tool.getMiningSpeed(stack, state) : 1.0F;
     }
 
@@ -115,16 +115,16 @@ public class BoerBaseItem extends Item {
 
     @Override
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity miningEntity) {
-        BoerContents boerContents = stack.get(ModDataComponents.BOER_CONTENTS);
+        BoerContents boerContents = Utils.getBoerContents(stack);
         if (boerContents == null) {
             return false;
         } else {
             if (!level.isClientSide && state.getDestroySpeed(level, pos) != 0.0F) {
                 ItemStack boer = boerContents.getItemUnsafe();
-                BoerHead tool = Utils.getBoer(stack.getOrDefault(ModDataComponents.BOER_CONTENTS, BoerContents.EMPTY).items);
+                BoerHead tool = Utils.getBoer(Utils.getBoerContentsOrEmpty(stack).items);
                 int damage = tool != null ? tool.getDamage(state) : 1;
                 boer.hurtAndBreak(damage, miningEntity, EquipmentSlot.MAINHAND);
-                stack.set(ModDataComponents.BOER_CONTENTS.get(), new BoerContents(boer));
+                Utils.setBoerContents(stack, new BoerContents(boer));
                 if (tool != null && miningEntity instanceof ServerPlayer player) {
                     if (tool.radius().isPresent()) {
                         Vec3i radius;
@@ -182,7 +182,7 @@ public class BoerBaseItem extends Item {
     }
 
     public void onAttackTick(Level level, Player player, ItemStack stack, int used) {
-        ItemStack boer = stack.getOrDefault(ModDataComponents.BOER_CONTENTS, BoerContents.EMPTY).items;
+        ItemStack boer = Utils.getBoerContentsOrEmpty(stack).items;
         if (!boer.isEmpty()) {
             List<LivingEntity> targetEntities = getTargetEntity(player, level);
 
@@ -199,7 +199,7 @@ public class BoerBaseItem extends Item {
                         if (player.tickCount % 10 == 0) {
                             target.hurt(level.damageSources().playerAttack(player), 2.0F);
                             boer.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
-                            stack.set(ModDataComponents.BOER_CONTENTS, new BoerContents(boer));
+                            Utils.setBoerContents(stack, new BoerContents(boer));
 
                             level.playSound(null, target.blockPosition(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.3F, 1.8F);
                         }
@@ -213,10 +213,14 @@ public class BoerBaseItem extends Item {
                 if (result.getType() == HitResult.Type.BLOCK) {
                     if (BoersClientConfig.CONFIG.BREAKING_SOUNDS.get()) {
                         if (ModClientEvents.soundInstance == null || !Minecraft.getInstance().getSoundManager().isActive(ModClientEvents.soundInstance)) {
-                            if (ModClientEvents.idleSoundInstance != null)
+                            if (ModClientEvents.idleSoundInstance != null) {
                                 ModClientEvents.idleSoundInstance.remove();
+                                ModClientEvents.idleSoundInstance2.remove();
+                            }
                             ModClientEvents.soundInstance = new BoerSoundInstance(ModSounds.STONE.get(), SoundSource.PLAYERS, 0.25f, 1f, player, player.getRandom().nextLong());
+                            ModClientEvents.soundInstance2 = new BoerSoundInstance(ModSounds.STONE.get(), SoundSource.PLAYERS, 0.25f, 1f, player, player.getRandom().nextLong());
                             Minecraft.getInstance().getSoundManager().play(ModClientEvents.soundInstance);
+                            Minecraft.getInstance().getSoundManager().playDelayed(ModClientEvents.soundInstance2, 4);
                         }
                     }
                     Minecraft.getInstance().particleEngine.addBlockHitEffects(result.getBlockPos(), result);
@@ -224,15 +228,19 @@ public class BoerBaseItem extends Item {
                 } else {
                     if (BoersClientConfig.CONFIG.BREAKING_SOUNDS.get()) {
                         if (ModClientEvents.idleSoundInstance == null || !Minecraft.getInstance().getSoundManager().isActive(ModClientEvents.idleSoundInstance)) {
-                            if (ModClientEvents.soundInstance != null)
+                            if (ModClientEvents.soundInstance != null) {
                                 ModClientEvents.soundInstance.remove();
+                                ModClientEvents.soundInstance2.remove();
+                            }
                             ModClientEvents.idleSoundInstance = new BoerSoundInstance(ModSounds.AIR.get(), SoundSource.PLAYERS, 0.25f, 1f, player, player.getRandom().nextLong());
+                            ModClientEvents.idleSoundInstance2 = new BoerSoundInstance(ModSounds.AIR.get(), SoundSource.PLAYERS, 0.25f, 1f, player, player.getRandom().nextLong());
                             Minecraft.getInstance().getSoundManager().play(ModClientEvents.idleSoundInstance);
+                            Minecraft.getInstance().getSoundManager().playDelayed(ModClientEvents.idleSoundInstance2, 5);
                         }
                     }
                 }
             } else {
-                stack.set(ModDataComponents.USED_FOR, stack.getOrDefault(ModDataComponents.USED_FOR, 0) + 1);
+                Utils.increaseUseFor(stack);
             }
         }
     }
@@ -275,7 +283,7 @@ public class BoerBaseItem extends Item {
 
     @Override
     public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
-        BoerHead head = Utils.getBoer(stack.getOrDefault(ModDataComponents.BOER_CONTENTS, BoerContents.EMPTY).items);
+        BoerHead head = Utils.getBoer(Utils.getBoerContentsOrEmpty(stack).items);
         if (head != null) {
             return head.isCorrectForDrops(state);
         }
@@ -287,7 +295,7 @@ public class BoerBaseItem extends Item {
         if (stack.getCount() != 1 || action != ClickAction.SECONDARY) {
             return false;
         } else {
-            BoerContents bundlecontents = stack.get(ModDataComponents.BOER_CONTENTS);
+            BoerContents bundlecontents = Utils.getBoerContents(stack);
             if (bundlecontents == null) {
                 return false;
             } else {
@@ -311,7 +319,7 @@ public class BoerBaseItem extends Item {
                     }
                 }
 
-                stack.set(ModDataComponents.BOER_CONTENTS, bundlecontents$mutable.toImmutable());
+                Utils.setBoerContents(stack, bundlecontents$mutable.toImmutable());
                 return true;
             }
         }
@@ -323,7 +331,7 @@ public class BoerBaseItem extends Item {
     ) {
         if (stack.getCount() != 1) return false;
         if (action == ClickAction.SECONDARY && slot.allowModification(player)) {
-            BoerContents bundlecontents = stack.get(ModDataComponents.BOER_CONTENTS);
+            BoerContents bundlecontents = Utils.getBoerContents(stack);
             if (bundlecontents == null) {
                 return false;
             } else {
@@ -349,7 +357,7 @@ public class BoerBaseItem extends Item {
                     }
                 }
 
-                stack.set(ModDataComponents.BOER_CONTENTS, bundlecontents$mutable.toImmutable());
+                Utils.setBoerContents(stack,bundlecontents$mutable.toImmutable());
                 return true;
             }
         } else {
@@ -359,41 +367,27 @@ public class BoerBaseItem extends Item {
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        ItemStack boer = stack.getOrDefault(ModDataComponents.BOER_CONTENTS.get(), BoerContents.EMPTY).items;
+        ItemStack boer = Utils.getBoerContentsOrEmpty(stack).items;
         return !boer.isEmpty() && boer.isDamaged();
     }
 
     @Override
     public int getBarWidth(ItemStack stack) {
-        return stack.getOrDefault(ModDataComponents.BOER_CONTENTS.get(), BoerContents.EMPTY).items.getBarWidth();
-    }
-
-    private static boolean dropContents(ItemStack stack, Player player) {
-        BoerContents bundlecontents = stack.get(ModDataComponents.BOER_CONTENTS);
-        if (bundlecontents != null && !bundlecontents.isEmpty()) {
-            stack.set(ModDataComponents.BOER_CONTENTS, BoerContents.EMPTY);
-            if (player instanceof ServerPlayer) {
-                player.drop(bundlecontents.itemsCopy(), true);
-            }
-
-            return true;
-        } else {
-            return false;
-        }
+        return Utils.getBoerContentsOrEmpty(stack).items.getBarWidth();
     }
 
     @Override
     public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
         return !stack.has(DataComponents.HIDE_TOOLTIP) && !stack.has(DataComponents.HIDE_ADDITIONAL_TOOLTIP)
-                ? Optional.ofNullable(stack.get(ModDataComponents.BOER_CONTENTS))
+                ? Optional.ofNullable(Utils.getBoerContents(stack))
                 : Optional.empty();
     }
 
     @Override
     public void onDestroyed(ItemEntity itemEntity) {
-        BoerContents bundlecontents = itemEntity.getItem().get(ModDataComponents.BOER_CONTENTS);
+        BoerContents bundlecontents = Utils.getBoerContents(itemEntity.getItem());
         if (bundlecontents != null) {
-            itemEntity.getItem().set(ModDataComponents.BOER_CONTENTS, BoerContents.EMPTY);
+            Utils.setBoerContents(itemEntity.getItem(), BoerContents.EMPTY);
             ItemUtils.onContainerDestroyed(itemEntity, List.of(bundlecontents.itemsCopy()));
         }
     }

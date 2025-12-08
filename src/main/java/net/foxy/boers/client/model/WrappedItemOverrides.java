@@ -41,7 +41,7 @@ public class WrappedItemOverrides extends ItemOverrides {
     @Override
     public @Nullable BakedModel resolve(BakedModel model, ItemStack bore, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
         if (model instanceof BoerModel.Baked boerModel) {
-            ItemStack stack = bore.getOrDefault(ModDataComponents.BOER_CONTENTS, BoerContents.EMPTY).itemsCopy();
+            ItemStack stack = Utils.getBoerContentsOrEmpty(bore).itemsCopy();
             if (stack.isEmpty()) {
                 stack = bore;
             }
@@ -49,7 +49,7 @@ public class WrappedItemOverrides extends ItemOverrides {
             final ResourceLocation texture;
             if (head == null) {
                 texture = Utils.rl("item/boer/default_boer_head_idle");
-            } else if (!bore.getOrDefault(ModDataComponents.IS_USED.get(), false)) {
+            } else if (!Utils.isUsed(bore)) {
                 texture = head.texture().idle();
             } else {
                 texture = head.texture().active();

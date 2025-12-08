@@ -44,7 +44,7 @@ public class RenderUtils {
 
     public static void renderItemModel(ItemStack bore, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
         boolean flag1;
-        ItemStack stack = bore.getOrDefault(ModDataComponents.BOER_CONTENTS, BoerContents.EMPTY).getItemUnsafe();
+        ItemStack stack = Utils.getBoerContentsOrEmpty(bore).getItemUnsafe();
         if (stack.isEmpty()) {
             stack = bore;
         }
