@@ -63,11 +63,14 @@ public class BoerBaseItem extends Item {
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
         if (isSelected) {
             entity.setYBodyRot(entity.getYHeadRot() + 37);
-            if (entity instanceof Player player && stack.getOrDefault(ModDataComponents.IS_USED, false)) {
-                player.attackStrengthTicker = 10;
-                player.swinging = false;
-                player.attackAnim = 0;
-                player.swingTime = 0;
+            if (entity instanceof Player player) {
+                if (stack.getOrDefault(ModDataComponents.IS_USED, false)) {
+                    player.swinging = false;
+                    player.attackAnim = 0;
+                    player.swingTime = 0;
+                } else {
+                    stack.set(ModDataComponents.USED_FOR, Math.max(0, stack.getOrDefault(ModDataComponents.USED_FOR, 3) - 3));
+                }
             }
         }
 
@@ -100,7 +103,12 @@ public class BoerBaseItem extends Item {
 
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         BoerHead tool = Utils.getBoer(stack.getOrDefault(ModDataComponents.BOER_CONTENTS, BoerContents.EMPTY).items);
-        return tool != null ? tool.getMiningSpeed(state) : 1.0F;
+        return tool != null ? tool.getMiningSpeed(stack, state) : 1.0F;
+    }
+
+    @Override
+    public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
+        return !oldStack.is(newStack.getItem());
     }
 
     @Override
@@ -169,6 +177,8 @@ public class BoerBaseItem extends Item {
                         }
                     }
                 }
+            } else {
+                stack.set(ModDataComponents.USED_FOR, stack.getOrDefault(ModDataComponents.USED_FOR, 0) + 1);
             }
         }
     }

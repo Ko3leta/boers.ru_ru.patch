@@ -16,10 +16,13 @@ public class ModDataComponents {
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Holder<BoerHead>>> BOER =
             COMPONENTS.registerComponentType("boer", builder -> builder.persistent(BoerHead.ITEM_CODEC)
-                    .networkSynchronized(BoerHead.STREAM_CODEC));
+                    .networkSynchronized(BoerHead.STREAM_CODEC).cacheEncoding());
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> IS_USED =
-            COMPONENTS.registerComponentType("o_used", builder -> builder
+            COMPONENTS.registerComponentType("used", builder -> builder
                     .networkSynchronized(ByteBufCodecs.BOOL));
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> USED_FOR =
+            COMPONENTS.registerComponentType("used_for", builder -> builder
+                    .networkSynchronized(ByteBufCodecs.INT));
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<BoerContents>> BOER_CONTENTS = COMPONENTS.registerComponentType(
             "boer_contents", builder -> builder.persistent(BoerContents.CODEC).networkSynchronized(BoerContents.STREAM_CODEC)
