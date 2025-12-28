@@ -12,11 +12,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.client.NeoForgeRenderTypes;
 
 public class BoerBaseRenderer extends BlockEntityWithoutLevelRenderer {
 
@@ -33,11 +35,11 @@ public class BoerBaseRenderer extends BlockEntityWithoutLevelRenderer {
             if (!flag) {
                 poseStack.translate(-1 * 0.0625, 3 * 0.0625, 0);
             }
-            RenderUtils.renderItemModel(stack, displayContext, poseStack, buffer, packedLight, packedOverlay, ModModels.BOER_BASE_GUI);
+            RenderUtils.renderItemModel(stack, RenderType.CUTOUT, displayContext, poseStack, buffer, packedLight, packedOverlay, ModModels.BOER_BASE_GUI);
             poseStack.translate(-1 * 0.0625, 1 * 0.0625, 0.002);
 
             if (flag) {
-                RenderUtils.renderItemModel(stack, displayContext, poseStack, buffer, packedLight, packedOverlay);
+                RenderUtils.renderItemModel(stack, RenderType.CUTOUT, displayContext, poseStack, buffer, packedLight, packedOverlay);
             }
         } else {
             if (Utils.isUsed(stack)) {
@@ -64,7 +66,7 @@ public class BoerBaseRenderer extends BlockEntityWithoutLevelRenderer {
                 }
             }
 
-            RenderUtils.renderItemModel(stack, displayContext, poseStack, buffer, packedLight, packedOverlay, ModModels.BOER_BASE);
+            RenderUtils.renderItemModel(stack, NeoForgeRenderTypes.ITEM_LAYERED_CUTOUT.get(), displayContext, poseStack, buffer, packedLight, packedOverlay, ModModels.BOER_BASE);
             poseStack.scale(0.5f, 0.5f, 1.01f);
             poseStack.translate(12 * 0.0625, 5 * 0.0625, -0.005f);
             BoerContents itemStack = Utils.getBoerContents(stack);
@@ -75,7 +77,7 @@ public class BoerBaseRenderer extends BlockEntityWithoutLevelRenderer {
                     usedFor = boerHead.getMaxAcceleration(stack);
                 }
                 int color = Math.max(255 - usedFor, 255 - BoersClientConfig.CONFIG.MAX_BOER_HEATING.get());
-                RenderUtils.renderItemModel(stack, displayContext, poseStack, buffer, packedLight, packedOverlay, 255, color, color, 255);
+                RenderUtils.renderItemModel(stack, NeoForgeRenderTypes.ITEM_LAYERED_CUTOUT.get(), displayContext, poseStack, buffer, packedLight, packedOverlay, 255, color, color, 255);
             }
         }
         poseStack.popPose();
