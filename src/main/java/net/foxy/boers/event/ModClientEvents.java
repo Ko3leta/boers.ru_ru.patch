@@ -78,7 +78,7 @@ public class ModClientEvents {
         ItemStack stack = player.getMainHandItem();
         if (stack.getItem() instanceof BoerBaseItem boer) {
             lastProgress = usingProgress;
-            if (Minecraft.getInstance().options.keyAttack.isDown()) {
+            if (Minecraft.getInstance().options.keyAttack.isDown() || BoersClientConfig.CONFIG.BREAK_WITH_USE_KEY.get() && Minecraft.getInstance().options.keyUse.isDown()) {
                 usingProgress = Math.min(usingProgress + 1, 10);
             } else {
                 usingProgress = Math.max(usingProgress - 1, 0);
